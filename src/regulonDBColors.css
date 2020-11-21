@@ -1,0 +1,20 @@
+/*Ver: 0.0.25*/
+/*color palette*/
+:root{
+	--color-blue1: #1F3D4E;
+	--color-blue2: #32617D;
+	--color-blue3: #3D779B;
+	--color-blue4: #72A7C7;
+	--color-blue5: #cadce7;
+	--color-grey1: #373737;
+	--color-grey2: #666666;
+	--color-grey3: #999999;
+	--color-grey3A: #99999999;
+	--color-grey4: #D5D5D7;
+	--color-grey5: #F4F5F5;
+	--color-rest: #FFFFFF;
+	--color-accentA: #C93A1D;
+	--color-accentAA: #C93A1D99;
+	--color-accentB: #CC9900;
+	--color-postit: #fff8a6;
+}
