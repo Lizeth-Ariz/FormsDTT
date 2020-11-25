@@ -286,7 +286,7 @@ div.container {
 div.elements {
   display: inline-block;
   position: absolute;
-  top: 10px;
+  top: 5px;
   left: 700px;
   right: 0;
   margin: 10 auto;
@@ -314,6 +314,10 @@ button {
   padding: 10px;
   background-color: #32617d;
   border: 1px solid #32617d;
+}
+ul {
+  margin: 5px;
+  padding: 0px;
 }
 
 /* s */

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import CheckBox from "./Checkbox";
 
 class FormRegulondbData extends Component {
   constructor(props) {
@@ -8,7 +9,17 @@ class FormRegulondbData extends Component {
       rightEndPosition: "",
       strand: "both",
       covered: true,
-      element: {}
+      elements: [
+        { id: 1, value: "gene", isChecked: false },
+        { id: 2, value: "promoter", isChecked: false },
+        { id: 3, value: "operon", isChecked: false },
+        { id: 4, value: "tf binding site", isChecked: false },
+        { id: 5, value: "rna", isChecked: false },
+        { id: 6, value: "riboswitch", isChecked: false },
+        { id: 7, value: "traslational attenuattor", isChecked: false },
+        { id: 8, value: "trascriptional attenuattor", isChecked: false },
+        { id: 9, value: "ppGpp", isChecked: false }
+      ]
     };
   }
   handleSubmit = (event) => {
@@ -30,8 +41,19 @@ class FormRegulondbData extends Component {
     }
   };
 
-  selectElements = (event) => {
-    console.log("seleccionando");
+  handleAllChecked = (event) => {
+    let elements = this.state.elements;
+    elements.forEach((element) => (element.isChecked = event.target.checked));
+    this.setState({ elements: elements });
+  };
+
+  handleCheckChieldElement = (event) => {
+    let elements = this.state.elements;
+    elements.forEach((element) => {
+      if (element.value === event.target.value)
+        element.isChecked = event.target.checked;
+    });
+    this.setState({ elements: elements });
   };
 
   render() {
@@ -103,92 +125,25 @@ class FormRegulondbData extends Component {
             (Draw only the elements that are completely contained in the
             selected range)
           </div>
-
           <div className="elements">
             Elements to display:
             <input
-              id="selectall"
               type="checkbox"
-              value="all"
-              name="element"
-              onChange={this.selectElements}
-            />
+              onClick={this.handleAllChecked}
+              value="checkedall"
+            />{" "}
             All
-            <br />
-            <input
-              type="checkbox"
-              value="gene"
-              name="element"
-              onChange={this.handleInputChange}
-            />
-            gene
-            <br />
-            <input
-              type="checkbox"
-              value="promoter"
-              name="element"
-              onChange={this.handleInputChange}
-            />
-            promotter
-            <br />
-            <input
-              type="checkbox"
-              value="operon"
-              name="element"
-              onChange={this.handleInputChange}
-            />
-            operon
-            <br />
-            <input
-              type="checkbox"
-              value="tf_binding_site"
-              name="element"
-              onChange={this.handleInputChange}
-            />
-            tf binding site
-            <br />
-            <input
-              type="checkbox"
-              value="srna"
-              name="element"
-              onChange={this.handleInputChange}
-            />
-            srna
-            <br />
-            <input
-              type="checkbox"
-              value="riboswitch"
-              name="element"
-              onChange={this.handleInputChange}
-            />
-            riboswitch
-            <br />
-            <input
-              type="checkbox"
-              value="traslational attenuattor"
-              name="element"
-              onChange={this.handleInputChange}
-            />
-            traslational attenuattor
-            <br />
-            <input
-              type="checkbox"
-              value="trascriptional attenuattor"
-              name="element"
-              onChange={this.handleInputChange}
-            />
-            trascriptional attenuattor
-            <br />
-            <input
-              type="checkbox"
-              value="ppGpp"
-              name="element"
-              onChange={this.handleInputChange}
-            />
-            ppGpp
-            <br />
+            <dl>
+              {this.state.elements.map((element) => {
+                return (
+                  <CheckBox
+                    handleCheckChieldElement={this.handleCheckChieldElement}
+                    {...element}
+                  />
+                );
+              })}
+            </dl>
           </div>
-
           <div>
             <button type="submit">Go</button>
             <button type="reset">Reset</button>
