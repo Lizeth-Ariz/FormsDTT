@@ -1,3 +1,108 @@
+/**
+
+# Component (user guide)
+
+# [FromUserData]
+	
+## Description  
+	
+[Description]
+
+## Category   
+	
+[Visual]  
+
+## Live demo 
+[-]
+
+## Installation 
+[-]
+
+## Usage 
+	
+[<FormUserData />]
+
+## Props 
+
+| Attribute | Type | Default | Description |
+| --------- | ---- | ------- | ----------- |
+|           |      |         |             |
+
+
+## Exception
+
+__Category: [Error, Warning or Message]__
+[Description of the exception (if necessary)]
+
+## License
+
+MIT License
+
+## Author 
+	
+RegulonDB Team: 
+[Lizeth-Ariz <user@aaa.com>]
+
+
+
+# Component (technical guide)
+
+## Component Type 
+
+[HOC]
+
+[stateful -> exportan funcion con estate y props, 
+  stateless -> exportan funcion con props y sin state , 
+  pure -> exporta una funcion sin props sin state, 
+  HOC -> exporta una Funcion copuesta, o clase , 
+  Hook -> exporta hook (react const) ]
+
+## Dependencies
+
+[import React, { Component } from "react";]
+
+## States
+	
+| Property | Value | Desctiption |
+| -------- | ----- | ----------- |
+|  inputtext        |   String    |      description       |
+| data | String | description	
+
+# Functions description
+
+
+## [handleSubmit]
+
+__Description:__  
+
+[Description of the function]
+
+
+__Usage:__
+
+```javascript
+<form onSubmit={this.handleSubmit}>
+```
+
+__Scope: __
+
+[Scope details]
+
+__Input Parameter:__  
+​__event:__ [Description]
+
+
+__Return:__  
+​__Void:__ []
+imprime en consola: 
+console.log("final data is", data);
+​[Description (if necessary)]
+
+
+
+ * 
+ */
+
 import React, { Component } from "react";
 
 class FormUserData extends Component {
@@ -16,12 +121,9 @@ class FormUserData extends Component {
   };
   handleInputChange = (event) => {
     event.preventDefault();
-    const target = event.target;
-    const value = target.type === "checkbox" ? target.checked : target.value;
-    const name = target.name;
     this.setState({
-      [name]: value
-      //[event.target.name]: event.target.value
+      //[name]: value
+      [event.target.name]: event.target.value
     });
   };
 

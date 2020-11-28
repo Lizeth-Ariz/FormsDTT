@@ -127,6 +127,7 @@ class FormRegulondbData extends Component {
           </div>
           <div className="elements">
             Elements to display:
+            <br />
             <input
               type="checkbox"
               onClick={this.handleAllChecked}
