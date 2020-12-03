@@ -104,49 +104,78 @@ console.log("final data is", data);
  */
 
 import React, { Component } from "react";
+import { Button, TextArea } from "./ui-components/index";
+//import ValidateFile from "./validation/validation_file";
 
 class FormUserData extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      inputtext: "",
-      data: ""
-    };
-  }
-
+  state = {
+    dataText: ""
+  };
   handleSubmit = (event) => {
     event.preventDefault();
     const data = this.state;
     console.log("final data is", data);
   };
-  handleInputChange = (event) => {
-    event.preventDefault();
+
+  handleInputChange = (text) => {
     this.setState({
-      //[name]: value
-      [event.target.name]: event.target.value
+      dataText: text
     });
   };
 
+  handleFileUpload = (e) => {
+    let files = e.target.files;
+    console.log(files[0].type);
+    let reader = new FileReader();
+    try {
+      if (Math.round(files[0].size / 1000) < 10240) {
+        //console.log(files[0])
+        reader.readAsDataURL(files[0]);
+        reader.onload = (e) => {
+          let data64 = reader.result.split(",");
+          let data = data64[1];
+          let buff = new Buffer(data, "base64");
+          let text = buff.toString("UTF-8");
+          document.getElementById("dataText01").value = text;
+          this.setState({ dataText: text });
+        };
+      } else {
+        alert("Unsupported file size");
+      }
+    } catch (error) {
+      console.error("no select file: " + error);
+    }
+  };
+
+  clear = () => {
+    document.getElementById("dataText01").value = "";
+    this.setState({
+      dataText: ""
+    });
+  };
   render() {
     return (
       <div className="container">
-        <form onSubmit={this.handleSubmit}>
-          <div>
-            <label>Enter data according to acceptable format ...</label>
-            <p>
-              <textarea
-                type="text"
-                name="inputtext"
-                onChange={this.handleInputChange}
-              />
-            </p>
-            <input type="file" name="data" onChange={this.handleInputChange} />
-          </div>
-          <div>
-            <button type="submit">Go</button>
-            <button type="reset">Reset</button>
-          </div>
-        </form>
+        <label>Enter data according to acceptable format ...</label>
+        <br />
+        <TextArea
+          id="dataText01"
+          value={this.state.dataText}
+          onChangeText={this.handleInputChange}
+        />
+        <br />
+        <input type="file" onChange={this.handleFileUpload} />
+        <br />
+        <Button
+          type="submit"
+          onClick={this.handleSubmit}
+          style={{ float: "left", marginRight: "2%", marginTop: "2%" }}
+        >
+          Go
+        </Button>
+        <Button type="reset" onClick={this.clear} style={{ marginTop: "2%" }}>
+          Reset
+        </Button>
       </div>
     );
   }

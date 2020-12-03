@@ -1,4 +1,3 @@
-
 /**
 # Component (user guide)
 
@@ -52,7 +51,6 @@ Description of the exception (if necessary)
 
 **/
 
-
 /**
 # Component (technical guide)
 
@@ -70,46 +68,47 @@ Description of the exception (if necessary)
 
 **/
 
-import React, { useState } from 'react'
-import PropTypes from 'prop-types';
-import Styles from './Selectors.module.css'
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import Styles from "./Selectors.module.css";
 
-const warnMenssage = "Checkbox does not have an added function for the change in prop \"onChange\" in checkbox: "
-
-
+const warnMenssage =
+  'Checkbox does not have an added function for the change in prop "onChange" in checkbox: ';
 
 const CheckBox = ({
-    disabled = false,
-    isCheck = false,
-    value = "",
-    label = "checkBox",
-    onChange = (value) => {console.warn(warnMenssage,value)} 
+  disabled = false,
+  isCheck = false,
+  value = "",
+  label = "checkBox",
+  onChange = (value) => {
+    console.warn(warnMenssage, value);
+  }
 }) => {
-    const [check, setCheck] = useState(isCheck)
+  const [check, setCheck] = useState(isCheck);
 
-    return (
-        <label className={Styles.checkLabel}>
-            <div className={Styles.checkText}>{label}</div>
-            <input
-                disabled={disabled}
-                type="checkbox"
-                checked={check}
-                onChange={()=>{
-                    setCheck(!check);
-                    onChange(value);
-                }}
-                value={value}
-            />
-            <span className={Styles.checkmark}></span>
-        </label>
-    )
-}
+  return (
+    <label className={Styles.checkLabel}>
+      <div className={Styles.checkText}>{label}</div>
+      <input
+        disabled={disabled}
+        type="checkbox"
+        checked={check}
+        onChange={() => {
+          setCheck(!check);
+          onChange(value);
+        }}
+        value={value}
+      />
+      <span className={Styles.checkmark}></span>
+    </label>
+  );
+};
 
 CheckBox.propTypes = {
-    active: PropTypes.bool,
-    checked: PropTypes.bool,
-    label: PropTypes.string,
-    onChange: PropTypes.func
+  active: PropTypes.bool,
+  checked: PropTypes.bool,
+  label: PropTypes.string,
+  onChange: PropTypes.func
 };
- 
+
 export default CheckBox;

@@ -51,7 +51,6 @@
 
 **/
 
-
 /**
 # Component (technical guide)
 
@@ -97,58 +96,54 @@
 		Description (if necessary)
 **/
 
-import React, {Component} from 'react'
-import PropTypes from 'prop-types';
-import Styles from './Text.module.css'
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import Styles from "./Text.module.css";
 
 export default class TextBox extends Component {
-    state = {
-        keyword: this.props.value
-    }
+  state = {
+    keyword: this.props.value
+  };
 
-    _inputChangedHandler(event) {
-        this.setState({ keyword: event.target.value })
-        this.props.onChangeText(event.target.value)
-    }
+  _inputChangedHandler(event) {
+    this.setState({ keyword: event.target.value });
+    this.props.onChangeText(event.target.value);
+  }
 
-    render() {
-        const {
-			placeholder,
-			style
-		} = this.props
-		const {
-			keyword
-		} = this.state
-        return (
-            <input
-				style={style}
-                type="text"
-                className={Styles.textBox}
-                placeholder={placeholder}
-                value={keyword}
-                onChange={(event) => this._inputChangedHandler(event)}
-            >
-            </input>
-        )
-    }
+  render() {
+    const { placeholder, style, id, name } = this.props;
+    const { keyword } = this.state;
+    return (
+      <input
+        id={id}
+        name={name}
+        style={style}
+        type="text"
+        className={Styles.textBox}
+        placeholder={placeholder}
+        value={keyword}
+        onChange={(event) => this._inputChangedHandler(event)}
+      ></input>
+    );
+  }
 }
 
 TextBox.propTypes = {
-    disabled: PropTypes.bool,
-	onChangeText: PropTypes.func,
-	placeholder: PropTypes.string,
-	value: PropTypes.string,
-	style: PropTypes.object
-}
+  disabled: PropTypes.bool,
+  onChangeText: PropTypes.func,
+  placeholder: PropTypes.string,
+  value: PropTypes.string,
+  style: PropTypes.object
+};
 
 TextBox.defaultProps = {
-    disabled: false,
-	onChangeText: noAction,
-	placeholder: "type here",
-	value: "",
-	style: {}
+  disabled: false,
+  onChangeText: noAction,
+  placeholder: "type here",
+  value: "",
+  style: {}
 };
 
 function noAction() {
-    console.warn('The TextBox State is undefined')
+  console.warn("The TextBox State is undefined");
 }
