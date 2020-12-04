@@ -1,5 +1,3 @@
-export function File(file) {
-  //Valida la extencion
-  //Validar contenido
+export function Validation_File(textData) {
   return false;
 }

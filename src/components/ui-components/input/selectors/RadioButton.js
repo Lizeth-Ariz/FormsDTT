@@ -57,7 +57,6 @@ RadioButton does not have an added function for the change in prop \"onChange\" 
 
 **/
 
-
 /**
 
 # Component (technical guide)
@@ -72,47 +71,48 @@ RadioButton does not have an added function for the change in prop \"onChange\" 
 
 **/
 
-import React from 'react'
-import PropTypes from 'prop-types';
-import Styles from './Selectors.module.css'
+import React from "react";
+import PropTypes from "prop-types";
+import Styles from "./Selectors.module.css";
 
-const warnMenssage = "RadioButton does not have an added function for the change in prop \"onChange\" in radioButton: "
+const warnMenssage =
+  'RadioButton does not have an added function for the change in prop "onChange" in radioButton: ';
 
 const RadioButton = ({
-    disabled = false,
-    isCheck = false,
-    name = "",
-    value = "",
-    label = "RadioButton",
-    onChange = (value, grupName) => {console.warn(`${warnMenssage} ${value} in group: ${grupName}`)} 
+  disabled = false,
+  isCheck = false,
+  name = "",
+  value = "",
+  label = "RadioButton",
+  onChange = (value, grupName) => {
+    console.warn(`${warnMenssage} ${value} in group: ${grupName}`);
+  }
 }) => {
-
-    return (
-        <label 
-            className={Styles.checkLabel}
-        >
-        {label}
-        <input
-            disabled={disabled}
-            type="radio"
-            checked={isCheck}
-            value={value}
-            name={name}
-            onChange={()=>{
-                onChange(value, name);
-            }}
-        />
-        <span className={Styles.rCheckmark}></span>
-        </label>
-    )
-}
+  return (
+    <label className={Styles.checkLabel}>
+      {label}
+      <input
+        disabled={disabled}
+        type="radio"
+        label="RadioButton"
+        checked={isCheck}
+        value={value}
+        name={name}
+        onChange={() => {
+          onChange(value, name);
+        }}
+      />
+      <span className={Styles.rCheckmark}></span>
+    </label>
+  );
+};
 
 export default RadioButton;
 
 RadioButton.propTypes = {
-    active: PropTypes.bool,
-    checked: PropTypes.bool,
-    label: PropTypes.string,
-    name: PropTypes.string,
-    onChange: PropTypes.func
+  active: PropTypes.bool,
+  checked: PropTypes.bool,
+  label: PropTypes.string,
+  name: PropTypes.string,
+  onChange: PropTypes.func
 };

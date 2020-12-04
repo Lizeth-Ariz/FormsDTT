@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import CheckBox from "./Checkbox";
-import { Button, TextBox, RadioButton } from "./ui-components/index";
+import {
+  Button,
+  TextBox,
+  RadioButtonGroup,
+  CheckBoxGroup
+} from "./ui-components/index";
 
 class FormRegulondbData extends Component {
   constructor(props) {
@@ -11,15 +16,15 @@ class FormRegulondbData extends Component {
       strand: "both",
       covered: true,
       elements: [
-        { id: 1, value: "gene", isChecked: false },
-        { id: 2, value: "promoter", isChecked: false },
-        { id: 3, value: "operon", isChecked: false },
-        { id: 4, value: "tf binding site", isChecked: false },
-        { id: 5, value: "rna", isChecked: false },
-        { id: 6, value: "riboswitch", isChecked: false },
-        { id: 7, value: "traslational attenuattor", isChecked: false },
-        { id: 8, value: "trascriptional attenuattor", isChecked: false },
-        { id: 9, value: "ppGpp", isChecked: false }
+        { id: 1, value: "gene", isChecked: true },
+        { id: 2, value: "promoter", isChecked: true },
+        { id: 3, value: "operon", isChecked: true },
+        { id: 4, value: "tf binding site", isChecked: true },
+        { id: 5, value: "rna", isChecked: true },
+        { id: 6, value: "riboswitch", isChecked: true },
+        { id: 7, value: "traslational attenuattor", isChecked: true },
+        { id: 8, value: "trascriptional attenuattor", isChecked: true },
+        { id: 9, value: "ppGpp", isChecked: true }
       ]
     };
   }
@@ -56,11 +61,19 @@ class FormRegulondbData extends Component {
     });
     this.setState({ elements: elements });
   };
-  handleInputChangeText = (text) => {
+  handleInputChangeTextLeft = (text) => {
     this.setState({
-      leftEndPosition: text,
+      leftEndPosition: text
+    });
+  };
+  handleInputChangeTextRight = (text) => {
+    this.setState({
       rightEndPosition: text
     });
+  };
+  handleDemo = () => {
+    document.getElementById("txt1").value = "3851220";
+    document.getElementById("txt2").value = "3851712";
   };
   clear = () => {
     this.setState({
@@ -75,11 +88,11 @@ class FormRegulondbData extends Component {
           <label>
             Absolute genome left position:
             <TextBox
-              id="position"
+              id="txt1"
               style={{ marginRight: "1%", marginLeft: "1%" }}
               value={this.state.leftEndPosition}
               name="leftEndPosition"
-              onChangeText={this.handleInputChangeText}
+              onChangeText={this.handleInputChangeTextLeft}
             />
             (1-4639676)
           </label>
@@ -87,44 +100,44 @@ class FormRegulondbData extends Component {
           <label>
             Absolute genome right position:
             <TextBox
-              id="position"
+              id="txt2"
               style={{ marginRight: "1%", marginLeft: "1%" }}
               value={this.state.rightEndPosition}
               name="rightEndPosition"
-              onChangeText={this.handleInputChangeText}
+              onChangeText={this.handleInputChangeTextRight}
             />
             (1-4639676)
           </label>
         </div>
-        <div>
-          Strand
-          <br />
-          <input
-            className="radio"
-            type="radio"
-            value="forward"
-            name="strand"
-            onChange={this.handleInputChange}
-          />
-          forward
-          <input
-            className="radio"
-            type="radio"
-            value="reverse"
-            name="strand"
-            onChange={this.handleInputChange}
-          />
-          reverse
-          <input
-            className="radio"
-            type="radio"
-            value="both"
-            name="strand"
-            defaultChecked={this.state.strand}
-            onChange={this.handleInputChange}
-          />
-          both
-        </div>
+        <RadioButtonGroup
+          title="Strand"
+          arrayOptions={["forward", "reverse", "both"]}
+          selectOption="both"
+          onChange={(selectOption) => {
+            console.log(selectOption);
+          }}
+        />
+        <br />
+
+        <CheckBoxGroup
+          className="elements"
+          title="Elements to display"
+          arrayOptions={[
+            "gene",
+            "promoter",
+            "operon",
+            "tf binding site",
+            "rna",
+            "riboswitch",
+            "traslational attenuattor",
+            "trascriptional attenuattor",
+            "ppGpp"
+          ]}
+          selectOption="covered"
+          onChange={(selectOption) => {
+            console.log(selectOption);
+          }}
+        />
         <div>
           Covered <br />
           <input
@@ -162,12 +175,24 @@ class FormRegulondbData extends Component {
         <Button
           type="submit"
           onClick={this.handleSubmit}
-          style={{ float: "left", marginRight: "2%", marginTop: "2%" }}
+          style={{
+            float: "left",
+            marginRight: "2%",
+            marginTop: "2%",
+            background: "#C93A1D"
+          }}
         >
           Go
         </Button>
-        <Button type="reset" onClick={this.clear} style={{ marginTop: "2%" }}>
+        <Button
+          type="reset"
+          onClick={this.clear}
+          style={{ float: "left", marginTop: "2%", marginRight: "2%" }}
+        >
           Reset
+        </Button>
+        <Button onClick={this.handleDemo} style={{ marginTop: "2%" }}>
+          Demo
         </Button>
       </div>
     );

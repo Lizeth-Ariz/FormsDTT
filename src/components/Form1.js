@@ -1,18 +1,24 @@
 import React, { Component } from "react";
-import CheckBox from "./Checkbox";
-import { Button, TextBox, RadioButton } from "./ui-components/index";
+//import CheckBox from "./Checkbox";
+import { Button, TextBox, RadioButtonGroup } from "./ui-components/index";
 
 class Form1 extends Component {
-  /*state = {
-    leftEndPosition: "",
-      rightEndPosition: "",
-  };*/
   constructor(props) {
     super(props);
     this.state = {
       leftEndPosition: "",
       rightEndPosition: "",
-      strand: "both"
+      strand: {
+        title: "Strand",
+        name: "strand",
+        arrayOptions: [
+          { value: "forward" },
+          { value: "reverse" },
+          { value: "both" }
+        ],
+        selectOption: "",
+        arrayDisabledOptions: []
+      }
     };
   }
   handleSubmit = (event) => {
@@ -57,7 +63,12 @@ class Form1 extends Component {
         />
         (1-4639676)
         <br />
-        Strand <br />
+        <RadioButtonGroup
+          name={this.state.strand.name}
+          title={this.state.strand.title}
+          option={this.state.strand.arrayOptions}
+          onChange={this.handleChange}
+        />
         <br />
         <Button
           type="submit"

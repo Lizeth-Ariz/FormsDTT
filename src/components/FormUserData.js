@@ -105,7 +105,8 @@ console.log("final data is", data);
 
 import React, { Component } from "react";
 import { Button, TextArea } from "./ui-components/index";
-//import ValidateFile from "./validation/validation_file";
+
+//import {Validation_File} from "./validation/validation_file";
 
 class FormUserData extends Component {
   state = {
@@ -123,14 +124,14 @@ class FormUserData extends Component {
     });
   };
 
-  handleFileUpload = (e) => {
-    let files = e.target.files;
-    console.log(files[0].type);
+  handleCatchFile = (event) => {};
+
+  _handleFileUpload = (urlFile = "", filesize) => {
     let reader = new FileReader();
     try {
-      if (Math.round(files[0].size / 1000) < 10240) {
+      if (Math.round(filesize / 1000) < 10240) {
         //console.log(files[0])
-        reader.readAsDataURL(files[0]);
+        reader.readAsDataURL(urlFile);
         reader.onload = (e) => {
           let data64 = reader.result.split(",");
           let data = data64[1];
@@ -147,8 +148,47 @@ class FormUserData extends Component {
     }
   };
 
+  handleFileUpload = (e) => {
+    let fileInput = document.getElementById("file01");
+    let fileRoute = fileInput.value;
+    let allowExt = /(.txt|.json)$/;
+    if (!allowExt.exec(fileRoute)) {
+      alert(
+        "Check the extension of the files to upload. You can only upload files with extensions: .txt or .json"
+      );
+      fileInput.value = "";
+      return false;
+    } else {
+      let files = e.target.files;
+      console.log(files[0].type);
+      let reader = new FileReader();
+      try {
+        if (Math.round(files[0].size / 1000) < 10240) {
+          //console.log(files[0])
+          reader.readAsDataURL(files[0]);
+          reader.onload = (e) => {
+            let data64 = reader.result.split(",");
+            let data = data64[1];
+            let buff = new Buffer(data, "base64");
+            let text = buff.toString("UTF-8");
+            document.getElementById("dataText01").value = text;
+            this.setState({ dataText: text });
+          };
+        } else {
+          alert("Unsupported file size");
+        }
+      } catch (error) {
+        console.error("no select file: " + error);
+      }
+    }
+  };
+
+  handleDemo = () => {
+    this._handleFileUpload("./userData/regulonData.json", 800);
+  };
   clear = () => {
     document.getElementById("dataText01").value = "";
+    document.getElementById("file01").value = "";
     this.setState({
       dataText: ""
     });
@@ -164,17 +204,29 @@ class FormUserData extends Component {
           onChangeText={this.handleInputChange}
         />
         <br />
-        <input type="file" onChange={this.handleFileUpload} />
+        <input id="file01" type="file" onChange={this.handleFileUpload} />
         <br />
         <Button
           type="submit"
           onClick={this.handleSubmit}
-          style={{ float: "left", marginRight: "2%", marginTop: "2%" }}
+          style={{
+            float: "left",
+            marginRight: "2%",
+            marginTop: "2%",
+            background: "#C93A1D"
+          }}
         >
           Go
         </Button>
-        <Button type="reset" onClick={this.clear} style={{ marginTop: "2%" }}>
+        <Button
+          type="reset"
+          onClick={this.clear}
+          style={{ float: "left", marginTop: "2%", marginRight: "2%" }}
+        >
           Reset
+        </Button>
+        <Button onClick={this.handleDemo} style={{ marginTop: "2%" }}>
+          Demo
         </Button>
       </div>
     );
