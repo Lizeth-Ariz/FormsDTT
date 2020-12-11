@@ -1,5 +1,4 @@
-# Generated file with database RegulonDB
-%object_type	left_position	right_position	strand	object_color	line_width	line_type	label_name	label_font	label_color	label_size	tooltip	line_color
+object_type	left_position	right_position	strand	object_color	line_width	line_type	label_name	label_font	label_color	label_size	tooltip	line_color
 gene	+3597181	3597681	reverse	0,209,204	1	0	livJ	arial	0,0,0	12	Genome position:<br> 3596578-3597681.	0,0,0
 tf_binding_site	3597906	3597917	reverse	255,28,0	1	0	Lrp	arial	0,0,0	12	Genome position: 3597906-3597917	0,0,0
 srna	3597703	3597726	reverse	0,0,0	1	0	GcvB	arial	0,0,0	12	Genome position: 3597703-3597726	0,0,0

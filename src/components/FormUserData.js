@@ -105,9 +105,8 @@ console.log("final data is", data);
 
 import React, { Component } from "react";
 import { Button, TextArea } from "./ui-components/index";
-
 //import {Validation_File} from "./validation/validation_file";
-
+import * as dataDoc from "./userData/regulonData.txt";
 class FormUserData extends Component {
   state = {
     dataText: ""
@@ -124,7 +123,10 @@ class FormUserData extends Component {
     });
   };
 
-  handleCatchFile = (event) => {};
+  handleCatchFile = (event) => {
+    //console.log(data);
+    document.getElementById("dataText01").value = dataDoc?.default;
+  };
 
   _handleFileUpload = (urlFile = "", filesize) => {
     let reader = new FileReader();
@@ -182,10 +184,6 @@ class FormUserData extends Component {
       }
     }
   };
-
-  handleDemo = () => {
-    this._handleFileUpload("./userData/regulonData.json", 800);
-  };
   clear = () => {
     document.getElementById("dataText01").value = "";
     document.getElementById("file01").value = "";
@@ -208,26 +206,27 @@ class FormUserData extends Component {
         <br />
         <Button
           type="submit"
+          label="Go"
           onClick={this.handleSubmit}
           style={{
             float: "left",
+            marginLeft: "5%",
             marginRight: "2%",
             marginTop: "2%",
             background: "#C93A1D"
           }}
-        >
-          Go
-        </Button>
+        />
         <Button
           type="reset"
+          label="Reset"
           onClick={this.clear}
           style={{ float: "left", marginTop: "2%", marginRight: "2%" }}
-        >
-          Reset
-        </Button>
-        <Button onClick={this.handleDemo} style={{ marginTop: "2%" }}>
-          Demo
-        </Button>
+        />
+        <Button
+          label="Demo"
+          onClick={this.handleCatchFile}
+          style={{ marginTop: "2%" }}
+        />
       </div>
     );
   }

@@ -1,5 +1,5 @@
+//import { lab } from "d3";
 import React, { Component } from "react";
-import CheckBox from "./Checkbox";
 import {
   Button,
   TextBox,
@@ -16,15 +16,16 @@ class FormRegulondbData extends Component {
       strand: "both",
       covered: true,
       elements: [
-        { id: 1, value: "gene", isChecked: true },
-        { id: 2, value: "promoter", isChecked: true },
-        { id: 3, value: "operon", isChecked: true },
-        { id: 4, value: "tf binding site", isChecked: true },
-        { id: 5, value: "rna", isChecked: true },
-        { id: 6, value: "riboswitch", isChecked: true },
-        { id: 7, value: "traslational attenuattor", isChecked: true },
-        { id: 8, value: "trascriptional attenuattor", isChecked: true },
-        { id: 9, value: "ppGpp", isChecked: true }
+        { id: "all", value: "All", isCheck: true },
+        { id: 1, value: "gene", isCheck: true },
+        { id: 2, value: "promoter", isCheck: true },
+        { id: 3, value: "operon", isCheck: true },
+        { id: 4, value: "tf binding site", isCheck: true },
+        { id: 5, value: "rna", isCheck: true },
+        { id: 6, value: "riboswitch", isCheck: true },
+        { id: 7, value: "traslational attenuattor", isCheck: true },
+        { id: 8, value: "trascriptional attenuattor", isCheck: true },
+        { id: 9, value: "ppGpp", isCheck: true }
       ]
     };
   }
@@ -42,17 +43,10 @@ class FormRegulondbData extends Component {
     if (event.target.type === "checkbox") {
       this.setState({ [event.target.name]: event.target.checked });
     }
-    if (event.target.type === "checkbox" && event.target.name === "element") {
-      this.setState({ [event.target.name]: event.target.value });
-    }
   };
 
-  handleAllChecked = (event) => {
-    let elements = this.state.elements;
-    elements.forEach((element) => (element.isChecked = event.target.checked));
-    this.setState({ elements: elements });
-  };
-
+  handleAllChecked = (event) => {};
+  /*
   handleCheckChieldElement = (event) => {
     let elements = this.state.elements;
     elements.forEach((element) => {
@@ -60,7 +54,7 @@ class FormRegulondbData extends Component {
         element.isChecked = event.target.checked;
     });
     this.setState({ elements: elements });
-  };
+  };*/
   handleInputChangeTextLeft = (text) => {
     this.setState({
       leftEndPosition: text
@@ -71,15 +65,13 @@ class FormRegulondbData extends Component {
       rightEndPosition: text
     });
   };
-  handleDemo = () => {
+  handleDemo = (e) => {
     document.getElementById("txt1").value = "3851220";
     document.getElementById("txt2").value = "3851712";
   };
   clear = () => {
-    this.setState({
-      leftEndPosition: "",
-      rightEndPosition: ""
-    });
+    document.getElementById("txt1").value = "";
+    document.getElementById("txt2").value = "";
   };
   render() {
     return (
@@ -89,6 +81,7 @@ class FormRegulondbData extends Component {
             Absolute genome left position:
             <TextBox
               id="txt1"
+              type="number"
               style={{ marginRight: "1%", marginLeft: "1%" }}
               value={this.state.leftEndPosition}
               name="leftEndPosition"
@@ -101,6 +94,7 @@ class FormRegulondbData extends Component {
             Absolute genome right position:
             <TextBox
               id="txt2"
+              type="number"
               style={{ marginRight: "1%", marginLeft: "1%" }}
               value={this.state.rightEndPosition}
               name="rightEndPosition"
@@ -108,92 +102,66 @@ class FormRegulondbData extends Component {
             />
             (1-4639676)
           </label>
-        </div>
-        <RadioButtonGroup
-          title="Strand"
-          arrayOptions={["forward", "reverse", "both"]}
-          selectOption="both"
-          onChange={(selectOption) => {
-            console.log(selectOption);
-          }}
-        />
-        <br />
-
-        <CheckBoxGroup
-          className="elements"
-          title="Elements to display"
-          arrayOptions={[
-            "gene",
-            "promoter",
-            "operon",
-            "tf binding site",
-            "rna",
-            "riboswitch",
-            "traslational attenuattor",
-            "trascriptional attenuattor",
-            "ppGpp"
-          ]}
-          selectOption="covered"
-          onChange={(selectOption) => {
-            console.log(selectOption);
-          }}
-        />
-        <div>
-          Covered <br />
-          <input
-            className="radio"
-            type="checkbox"
-            value="covered"
-            defaultChecked={this.state.covered}
-            name="covered"
-            onChange={this.handleInputChange}
+          <RadioButtonGroup
+            title="Strand"
+            arrayOptions={["forward", "reverse", "both"]}
+            selectOption="both"
+            onChange={(selectOption) => {
+              console.log(selectOption);
+            }}
           />
-          (Draw only the elements that are completely contained in the selected
-          range)
-        </div>
-        <div className="elements">
-          Elements to display:
           <br />
-          <input
-            type="checkbox"
-            onClick={this.handleAllChecked}
-            value="checkedall"
-          />{" "}
-          All
-          <dl>
-            {this.state.elements.map((element) => {
-              return (
-                <CheckBox
-                  handleCheckChieldElement={this.handleCheckChieldElement}
-                  {...element}
-                />
-              );
-            })}
-          </dl>
+          <CheckBoxGroup
+            title="Covered"
+            name="covered"
+            arrayOptions={[
+              {
+                id: "covered",
+                value:
+                  "(Draw only the elements that are completely contained in the selected range)",
+                isCheck: this.state.covered
+              }
+            ]}
+            onChange={(selectOption) => {
+              console.log(selectOption);
+            }}
+          />
+          <br />
         </div>
-
+        <div>
+          <CheckBoxGroup
+            title="Genetic Elements"
+            name="elements"
+            arrayOptions={this.state.elements}
+            onChange={(selectOption) => {
+              if (selectOption[0].isCheck) {
+                console.log("seleciona todos");
+              } else {
+                console.log("sin seleccionar");
+              }
+              //console.log(selectOption[0])
+            }}
+          />
+        </div>
+        <br />
         <Button
           type="submit"
+          label="Go"
           onClick={this.handleSubmit}
           style={{
             float: "left",
+            marginLeft: "5%",
             marginRight: "2%",
-            marginTop: "2%",
             background: "#C93A1D"
           }}
-        >
-          Go
-        </Button>
+        />
         <Button
           type="reset"
+          label="Reset"
           onClick={this.clear}
-          style={{ float: "left", marginTop: "2%", marginRight: "2%" }}
-        >
-          Reset
-        </Button>
-        <Button onClick={this.handleDemo} style={{ marginTop: "2%" }}>
-          Demo
-        </Button>
+          style={{ float: "left", marginRight: "2%" }}
+        />
+        <Button label="Demo" onClick={this.handleDemo} />
       </div>
     );
   }
