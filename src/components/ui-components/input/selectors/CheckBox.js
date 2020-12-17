@@ -84,17 +84,17 @@ const CheckBox = ({
     console.warn(warnMenssage, value);
   }
 }) => {
-  const [check, setCheck] = useState(isCheck);
-
+  //const [check, setCheck] = useState(isCheck);
+  //console.log(check);
   return (
     <label className={Styles.checkLabel}>
       <div className={Styles.checkText}>{label}</div>
       <input
         disabled={disabled}
         type="checkbox"
-        checked={check}
+        checked={isCheck}
         onChange={() => {
-          setCheck(!check);
+          //setCheck(!check);
           onChange(value);
         }}
         value={value}

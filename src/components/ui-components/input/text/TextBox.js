@@ -111,14 +111,14 @@ export default class TextBox extends Component {
   }
 
   render() {
-    const { placeholder, style, id, name } = this.props;
+    const { placeholder, style, type, id, name } = this.props;
     const { keyword } = this.state;
     return (
       <input
         id={id}
         name={name}
         style={style}
-        type="text"
+        type={type}
         className={Styles.textBox}
         placeholder={placeholder}
         value={keyword}
