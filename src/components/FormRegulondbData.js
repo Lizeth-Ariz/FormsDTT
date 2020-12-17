@@ -16,7 +16,6 @@ class FormRegulondbData extends Component {
       strand: "both",
       covered: true,
       elements: [
-        { id: "all", value: "All", isCheck: true },
         { id: 1, value: "gene", isCheck: true },
         { id: 2, value: "promoter", isCheck: true },
         { id: 3, value: "operon", isCheck: true },
@@ -37,24 +36,17 @@ class FormRegulondbData extends Component {
   handleInputChange = (event) => {
     event.preventDefault();
     this.setState({
-      //[name]: value
       [event.target.name]: event.target.value
     });
-    if (event.target.type === "checkbox") {
-      this.setState({ [event.target.name]: event.target.checked });
-    }
   };
 
-  handleAllChecked = (event) => {};
-  /*
-  handleCheckChieldElement = (event) => {
+  handleAllChecked = (event) => {
     let elements = this.state.elements;
-    elements.forEach((element) => {
-      if (element.value === event.target.value)
-        element.isChecked = event.target.checked;
-    });
+    elements.forEach((element) => (element.isCheck = event.target.checked));
+    console.log(elements);
     this.setState({ elements: elements });
-  };*/
+  };
+
   handleInputChangeTextLeft = (text) => {
     this.setState({
       leftEndPosition: text
@@ -63,6 +55,11 @@ class FormRegulondbData extends Component {
   handleInputChangeTextRight = (text) => {
     this.setState({
       rightEndPosition: text
+    });
+  };
+  handleChangeStrand = (event) => {
+    this.setState({
+      strand: event
     });
   };
   handleDemo = (e) => {
@@ -104,11 +101,10 @@ class FormRegulondbData extends Component {
           </label>
           <RadioButtonGroup
             title="Strand"
+            name="strand"
             arrayOptions={["forward", "reverse", "both"]}
             selectOption="both"
-            onChange={(selectOption) => {
-              console.log(selectOption);
-            }}
+            onChange={this.handleChangeStrand}
           />
           <br />
           <CheckBoxGroup
@@ -123,23 +119,25 @@ class FormRegulondbData extends Component {
               }
             ]}
             onChange={(selectOption) => {
-              console.log(selectOption);
+              //console.log(selectOption);
             }}
           />
           <br />
         </div>
+        <input
+          type="checkbox"
+          name="checkAll"
+          onClick={this.handleAllChecked}
+        />
+        CHECK ALL
         <div>
           <CheckBoxGroup
             title="Genetic Elements"
             name="elements"
             arrayOptions={this.state.elements}
             onChange={(selectOption) => {
-              if (selectOption[0].isCheck) {
-                console.log("seleciona todos");
-              } else {
-                console.log("sin seleccionar");
-              }
-              //console.log(selectOption[0])
+              //console.log(elements);
+              this.setState({ elements: selectOption });
             }}
           />
         </div>

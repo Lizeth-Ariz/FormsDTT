@@ -106,7 +106,7 @@ console.log("final data is", data);
 import React, { Component } from "react";
 import { Button, TextArea } from "./ui-components/index";
 //import {Validation_File} from "./validation/validation_file";
-import * as dataDoc from "./userData/regulonData.txt";
+import * as dataDoc from "./userData/demo.txt";
 class FormUserData extends Component {
   state = {
     dataText: ""
