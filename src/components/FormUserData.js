@@ -6,7 +6,9 @@
 	
 ## Description  
 	
-[Description]
+FormUserData is a user interface where the user can 
+load a document to graph the genetic elements contained
+in the document.
 
 ## Category   
 	
@@ -41,9 +43,7 @@ MIT License
 ## Author 
 	
 RegulonDB Team: 
-[Lizeth-Ariz <user@aaa.com>]
-
-
+[Lizeth-Ariz]
 
 # Component (technical guide)
 
@@ -60,28 +60,59 @@ RegulonDB Team:
 ## Dependencies
 
 [import React, { Component } from "react";]
+[import { Button, TextArea } from "./ui-components/index";]
 
 ## States
 	
-| Property | Value | Desctiption |
-| -------- | ----- | ----------- |
-|  inputtext        |   String    |      description       |
-| data | String | description	
+| Property | Value |          Desctiption           |
+| -------- | ----- | -----------------------------  |
+| dataText | String|  Updates state of the textarea |
 
 # Functions description
-
 
 ## [handleSubmit]
 
 __Description:__  
 
-[Description of the function]
-
+[Send the form information with the Go button]
 
 __Usage:__
 
 ```javascript
-<form onSubmit={this.handleSubmit}>
+onClick={this.handleSubmit}
+```
+## [handleInputChange]
+
+__Description:__  
+
+[Updates state of the textarea]
+
+__Usage:__
+
+```javascript
+onChangeText={this.handleInputChange}
+```
+## [handleCatchFile]
+
+__Description:__  
+
+[Loads the demo document and displays it in the textarea with the Demo button]
+
+__Usage:__
+
+```javascript
+onClick={this.handleCatchFile}
+```
+## [handleFileUpload]
+
+__Description:__  
+
+[Upload and validate the user's document with the upload file button]
+
+__Usage:__
+
+```javascript
+onChange={this.handleFileUpload} 
 ```
 
 __Scope: __
@@ -95,11 +126,8 @@ __Input Parameter:__
 __Return:__  
 ​__Void:__ []
 imprime en consola: 
-console.log("final data is", data);
+console.log("final data is", dataText);
 ​[Description (if necessary)]
-
-
-
  * 
  */
 
@@ -128,7 +156,7 @@ class FormUserData extends Component {
     document.getElementById("dataText01").value = dataDoc?.default;
   };
 
-  _handleFileUpload = (urlFile = "", filesize) => {
+  /*_handleFileUpload = (urlFile = "", filesize) => {
     let reader = new FileReader();
     try {
       if (Math.round(filesize / 1000) < 10240) {
@@ -149,7 +177,7 @@ class FormUserData extends Component {
       console.error("no select file: " + error);
     }
   };
-
+*/
   handleFileUpload = (e) => {
     let fileInput = document.getElementById("file01");
     let fileRoute = fileInput.value;

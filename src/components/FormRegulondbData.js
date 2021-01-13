@@ -1,4 +1,158 @@
-//import { lab } from "d3";
+/**
+
+# Component (user guide)
+
+# [FormRegulondbData]
+	
+## Description  
+	
+FormRegulondbData is a user interface where the user
+selects the options he prefers in the form to make 
+the graph of genetic elements.
+
+## Category   
+	
+[Visual]  
+
+## Live demo 
+[-]
+
+## Installation 
+[-]
+
+## Usage 
+	
+[<FormRegulondbData />]
+
+## Props 
+
+| Attribute | Type | Default | Description |
+| --------- | ---- | ------- | ----------- |
+|           |      |         |             |
+
+## Exception
+
+__Category: [Error, Warning or Message]__
+[Description of the exception (if necessary)]
+
+## License
+
+MIT License
+
+## Author 
+	
+RegulonDB Team: 
+[Lizeth-Ariz]
+
+# Component (technical guide)
+
+## Component Type 
+
+[HOC]
+
+## Dependencies
+
+[import React, { Component } from "react";]
+[import {Button,TextBox,RadioButtonGroup,CheckBoxGroup} from "./ui-components/index";]
+
+## States
+	
+|    Property      |      Value     | Desctiption                                     |
+|   ---------      |   --------     | ----------------------------------------------  |
+| leftEndPosition  |    String      | Left position, must be less than right position |
+| rightEndPosition |    Sting       | Right position.                                 |
+|  strand          |    String      | Direction of genetic elements, it can be reverse, forward or both | 
+| covered          |    bolean      | Draw only the elements that are completely contained in the selected range |
+|  elements        |    Array       | Genetic elements to be graphic in the specified range |
+
+# Functions description
+
+
+## [handleSubmit]
+
+__Description:__  
+
+[Send the form information with the Go button]
+
+__Usage:__
+
+```javascript
+onClick={this.handleSubmit}
+```
+## [handleAllChecked]
+
+__Description:__  
+
+[Select all items checkboxes ]
+
+__Usage:__
+
+```javascript
+onChange={this.handleAllChecked}
+```
+## [handleInputChangeTextLeft]
+
+__Description:__  
+
+[Update the left position state]
+
+__Usage:__
+
+```javascript
+onChangeText={this.handleInputChangeTextLeft}
+```
+## [handleInputChangeTextRight]
+
+__Description:__  
+
+[Update the right position state]
+
+__Usage:__
+
+```javascript
+onChangeText={this.handleInputChangeTextRight}
+```
+## [handleChangeStrand]
+
+__Description:__  
+
+[Update the strand state]
+
+__Usage:__
+
+```javascript
+onChange={this.handleChangeStrand}
+```
+
+## [handleDemo]
+
+__Description:__  
+
+[Load default values for left and right position]
+
+__Usage:__
+
+```javascript
+onChange={this.handleChangeStrand}
+```
+
+__Scope: __
+
+[Scope details]
+
+__Input Parameter:__  
+​__event:__ [Description]
+
+
+__Return:__  
+​__Void:__ []
+imprime en consola: 
+final data is: 
+{leftEndPosition: "56555656", rightEndPosition: "655443", strand: "both", covered: true, elements: Array(9)}
+
+ * 
+ */
+
 import React, { Component } from "react";
 import {
   Button,
@@ -33,12 +187,12 @@ class FormRegulondbData extends Component {
     const data = this.state;
     console.log("final data is", data);
   };
-  handleInputChange = (event) => {
+  /*handleInputChange = (event) => {
     event.preventDefault();
     this.setState({
       [event.target.name]: event.target.value
     });
-  };
+  };*/
 
   handleAllChecked = (event) => {
     let elements = this.state.elements;
@@ -119,6 +273,7 @@ class FormRegulondbData extends Component {
               }
             ]}
             onChange={(selectOption) => {
+              this.setState({ covered: selectOption[0].isCheck });
               //console.log(selectOption);
             }}
           />
@@ -127,7 +282,7 @@ class FormRegulondbData extends Component {
         <input
           type="checkbox"
           name="checkAll"
-          onClick={this.handleAllChecked}
+          onChange={this.handleAllChecked}
         />
         CHECK ALL
         <div>
