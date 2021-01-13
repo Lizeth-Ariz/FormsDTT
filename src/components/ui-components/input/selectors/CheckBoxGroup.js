@@ -2,7 +2,7 @@
 # Component (user guide)
 
 # Component name 
-[CheckBoxGroup --v1.0]
+[CheckBoxGroup --v1.0.5]
 
 ## Description  
 [Component allows you to group checkbox components]
@@ -41,7 +41,6 @@ checkboxGroup does not have an added function for the change in prop \"onChange\
 
 **/
 
-
 /**
 # Component (technical guide)
 ## Component Type 
@@ -58,88 +57,74 @@ checkboxGroup does not have an added function for the change in prop \"onChange\
 
 **/
 
-import React, {useState} from 'react'
-import PropTypes from 'prop-types'
-import CheckBox from './CheckBox'
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import CheckBox from "./CheckBox";
 
-const warnMenssage = "CheckboxGroup does not have an added function for the change in prop \"onChange\""
+const warnMenssage =
+  'CheckboxGroup does not have an added function for the change in prop "onChange"';
 
 const CheckBoxGroup = ({
-    arrayOptions = [],
-    arraySelectOptions = [],
-    arrayDisabledOptions = [],
-    title = "",
-    onChange = () => {console.warn(warnMenssage)}
+  arrayOptions = [],
+  title = "",
+  onChange = () => {
+    console.warn(warnMenssage);
+  },
+  onElementChange = () => {
+    return null;
+  }
 }) => {
-
-    const [selectOptions, setOption] = useState(arraySelectOptions)
-
-    const onChangeSelection = (value,options) =>{
-        //console.log(selectOptions)
-        if(isSelect(value)){
-            const indx = options.indexOf(value)
-            options.splice(indx,1)
-            setOption(options)
-        }else{
-            options.push(value)
-            setOption(options)
-        }
-        onChange(selectOptions)
-        //console.log(selectOptions)
+  const onChangeSelection = (isCheck, index) => {
+    //console.log(selectOptions)
+    let options = arrayOptions;
+    if (isCheck) {
+      options[index].isCheck = false;
+    } else {
+      options[index].isCheck = true;
     }
+    onChange(options);
+    //console.log(arrayOptions)
+  };
 
-    const isSelect = (value) => {
-        if(selectOptions.find(element => element === value)){
-            return true
-        }
-        return false
-    }
+  return (
+    <table>
+      <thead>
+        <tr>
+          <th>{title}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {arrayOptions.map((option, index) => {
+          //console.log(option.isCheck);
+          return (
+            <tr key={option.id}>
+              <td>
+                <CheckBox
+                  id={option?.id}
+                  label={option?.value}
+                  value={option?.value}
+                  disabled={option?.disabled}
+                  isCheck={option?.isCheck}
+                  onChange={() => {
+                    onChangeSelection(option.isCheck, index);
+                    onElementChange(option?.id, option?.isCheck);
+                  }}
+                />
+              </td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  );
+};
 
-    const isDisable = (value) => {
-        if(arrayDisabledOptions.find(element => element === value)){
-            return true
-        }
-        return false
-    }
-
-    return (
-        <table>
-            <thead>
-                <tr>
-                    <th>{title}</th>
-                </tr>
-            </thead>
-            <tbody>
-                {
-                    arrayOptions.map((option)=>{
-                        return(
-                            <tr key={option}>
-                                <td>
-                                    <CheckBox 
-                                    label={option} 
-                                    value={option}
-                                    disabled={isDisable(option)}
-                                    isCheck={isSelect(option)}
-                                    onChange={()=>{
-                                        onChangeSelection(option,selectOptions);
-                                    }}
-                                    />
-                                </td>
-                            </tr>
-                        )
-                    })
-                }
-            </tbody>
-        </table>
-    );
-}
- 
 export default CheckBoxGroup;
 
 CheckBoxGroup.propTypes = {
-    arrayOptions: PropTypes.array,
-    arrayDisabledOptions: PropTypes.array,
-    arraySelectOptions: PropTypes.array,
-    title: PropTypes.string,
-    onChange: PropTypes.func
+  arrayOptions: PropTypes.array,
+  arrayDisabledOptions: PropTypes.array,
+  arraySelectOptions: PropTypes.array,
+  title: PropTypes.string,
+  onChange: PropTypes.func
 };

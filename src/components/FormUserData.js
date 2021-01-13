@@ -6,7 +6,9 @@
 	
 ## Description  
 	
-[Description]
+FormUserData is a user interface where the user can 
+load a document to graph the genetic elements contained
+in the document.
 
 ## Category   
 	
@@ -41,9 +43,7 @@ MIT License
 ## Author 
 	
 RegulonDB Team: 
-[Lizeth-Ariz <user@aaa.com>]
-
-
+[Lizeth-Ariz]
 
 # Component (technical guide)
 
@@ -60,28 +60,59 @@ RegulonDB Team:
 ## Dependencies
 
 [import React, { Component } from "react";]
+[import { Button, TextArea } from "./ui-components/index";]
 
 ## States
 	
-| Property | Value | Desctiption |
-| -------- | ----- | ----------- |
-|  inputtext        |   String    |      description       |
-| data | String | description	
+| Property | Value |          Desctiption           |
+| -------- | ----- | -----------------------------  |
+| dataText | String|  Updates state of the textarea |
 
 # Functions description
-
 
 ## [handleSubmit]
 
 __Description:__  
 
-[Description of the function]
-
+[Send the form information with the Go button]
 
 __Usage:__
 
 ```javascript
-<form onSubmit={this.handleSubmit}>
+onClick={this.handleSubmit}
+```
+## [handleInputChange]
+
+__Description:__  
+
+[Updates state of the textarea]
+
+__Usage:__
+
+```javascript
+onChangeText={this.handleInputChange}
+```
+## [handleCatchFile]
+
+__Description:__  
+
+[Loads the demo document and displays it in the textarea with the Demo button]
+
+__Usage:__
+
+```javascript
+onClick={this.handleCatchFile}
+```
+## [handleFileUpload]
+
+__Description:__  
+
+[Upload and validate the user's document with the upload file button]
+
+__Usage:__
+
+```javascript
+onChange={this.handleFileUpload} 
 ```
 
 __Scope: __
@@ -95,19 +126,15 @@ __Input Parameter:__
 __Return:__  
 ​__Void:__ []
 imprime en consola: 
-console.log("final data is", data);
+console.log("final data is", dataText);
 ​[Description (if necessary)]
-
-
-
  * 
  */
 
 import React, { Component } from "react";
 import { Button, TextArea } from "./ui-components/index";
-
 //import {Validation_File} from "./validation/validation_file";
-
+import * as dataDoc from "./userData/demo.txt";
 class FormUserData extends Component {
   state = {
     dataText: ""
@@ -124,9 +151,12 @@ class FormUserData extends Component {
     });
   };
 
-  handleCatchFile = (event) => {};
+  handleCatchFile = (event) => {
+    //console.log(data);
+    document.getElementById("dataText01").value = dataDoc?.default;
+  };
 
-  _handleFileUpload = (urlFile = "", filesize) => {
+  /*_handleFileUpload = (urlFile = "", filesize) => {
     let reader = new FileReader();
     try {
       if (Math.round(filesize / 1000) < 10240) {
@@ -147,7 +177,7 @@ class FormUserData extends Component {
       console.error("no select file: " + error);
     }
   };
-
+*/
   handleFileUpload = (e) => {
     let fileInput = document.getElementById("file01");
     let fileRoute = fileInput.value;
@@ -182,10 +212,6 @@ class FormUserData extends Component {
       }
     }
   };
-
-  handleDemo = () => {
-    this._handleFileUpload("./userData/regulonData.json", 800);
-  };
   clear = () => {
     document.getElementById("dataText01").value = "";
     document.getElementById("file01").value = "";
@@ -208,26 +234,27 @@ class FormUserData extends Component {
         <br />
         <Button
           type="submit"
+          label="Go"
           onClick={this.handleSubmit}
           style={{
             float: "left",
+            marginLeft: "5%",
             marginRight: "2%",
             marginTop: "2%",
             background: "#C93A1D"
           }}
-        >
-          Go
-        </Button>
+        />
         <Button
           type="reset"
+          label="Reset"
           onClick={this.clear}
           style={{ float: "left", marginTop: "2%", marginRight: "2%" }}
-        >
-          Reset
-        </Button>
-        <Button onClick={this.handleDemo} style={{ marginTop: "2%" }}>
-          Demo
-        </Button>
+        />
+        <Button
+          label="Demo"
+          onClick={this.handleCatchFile}
+          style={{ marginTop: "2%" }}
+        />
       </div>
     );
   }

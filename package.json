@@ -9,8 +9,8 @@
   "main": "src/index.js",
   "dependencies": {
     "@svgdotjs/svg.js": "3.0.16",
+    "d3": "6.3.1",
     "node-modules": "1.0.1",
-    "node.js": "0.0.1-security",
     "prop-types": "15.7.2",
     "react": "17.0.0",
     "react-dom": "17.0.0",

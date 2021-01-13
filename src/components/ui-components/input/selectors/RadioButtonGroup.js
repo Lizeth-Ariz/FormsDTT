@@ -51,7 +51,6 @@ radioButtonGroup does not have an added function for the change in prop \"onChan
 
 **/
 
-
 /**
 
 # Component (technical guide)
@@ -72,71 +71,67 @@ radioButtonGroup does not have an added function for the change in prop \"onChan
 
 **/
 
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
-import RadioButton from './RadioButton'
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import RadioButton from "./RadioButton";
 
 const RadioButtonGroup = ({
-    arrayOptions = [],
-    selectOption = "",
-    arrayDisabledOptions = [],
-    title = "",
-    name = "",
-    onChange = () => { }
+  arrayOptions = [],
+  selectOption = "",
+  arrayDisabledOptions = [],
+  title = "",
+  name = "",
+  onChange = () => {}
 }) => {
+  const [selectedOption, setOption] = useState(selectOption);
 
-    const [selectedOption, setOption] = useState(selectOption)
-
-    const isDisable = (value) => {
-        if(arrayDisabledOptions.find(element => element === value)){
-            return true
-        }
-        return false
+  const isDisable = (value) => {
+    if (arrayDisabledOptions.find((element) => element === value)) {
+      return true;
     }
+    return false;
+  };
 
-    return (
-        <table>
-            <thead>
-                <tr>
-                    <th>{title}</th>
-                </tr>
-            </thead>
-            <tbody>
-                {
-                    arrayOptions.map((option)=>{
-                        return(
-                            <tr key={option}>
-                                <td>
-                                    <RadioButton
-                                    name={name}
-                                    label={option} 
-                                    value={option}
-                                    disabled={isDisable(option)}
-                                    isCheck={selectedOption === option}
-                                    onChange={()=>{
-                                        setOption(option)
-                                        onChange(option);
-                                    }}
-                                    />
-                                </td>
-                            </tr>
-                        )
-                    })
-                }
-            </tbody>
-        </table>
-        )
-}
+  return (
+    <table>
+      <thead>
+        <tr>
+          <th>{title}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {arrayOptions.map((option) => {
+          return (
+            <tr key={option.id}>
+              <td>
+                <RadioButton
+                  name={name}
+                  label={option}
+                  value={option}
+                  disabled={isDisable(option)}
+                  isCheck={selectedOption === option}
+                  onChange={() => {
+                    setOption(option);
+                    onChange(option);
+                  }}
+                />
+              </td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  );
+};
 
 export default RadioButtonGroup;
 
-
 RadioButtonGroup.propTypes = {
-    checkedOption: PropTypes.string,
-    dropdown: PropTypes.bool,
-    name: PropTypes.string,
-    options: PropTypes.array,
-    onChange: PropTypes.func,
-    styleGrupBox: PropTypes.object,
-    title: PropTypes.string
+  checkedOption: PropTypes.string,
+  dropdown: PropTypes.bool,
+  name: PropTypes.string,
+  options: PropTypes.array,
+  onChange: PropTypes.func,
+  styleGrupBox: PropTypes.object,
+  title: PropTypes.string
 };
